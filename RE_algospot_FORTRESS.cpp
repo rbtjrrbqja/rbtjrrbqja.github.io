@@ -23,27 +23,56 @@ private:
 	Wall w;
 	Node* parent;
 	vector<Node*> children;
+	int childrenSize;
 public:
-	Node(int x, int y, int r) : w(Wall(x, y, r)), parent(NULL) { }
+	Node(int x, int y, int r) : w(Wall(x, y, r)), parent(NULL), childrenSize(0) { }
 	~Node()
 	{
 		delete parent;
 
-		for (int i = 0; i < children.size(); i++)
+		for (int i = 0; i < childrenSize; i++)
 			delete children[i];
 	}
 
-	friend bool isRInL(const Node* r, const Node* l);
-	friend void makeTree(vector<Node*>& tree);
-	friend int getHeight(const Node* root);
+	Wall getWall() const
+	{
+		return w;
+	}
+
+	Node* getParent() const
+	{
+		return parent;
+	}
+
+	void setParent(Node* n)
+	{
+		parent = n;
+	}
+
+	Node* getChild(int idx) const
+	{
+		return children[idx];
+	}
+
+	void pushChildren(Node* n)
+	{
+		children.push_back(n);
+		childrenSize++;
+	}
+
+	int getChildrenSize() const
+	{
+		return childrenSize;
+	}
 };
 
 // 왼쪽이 오른쪽 안에 포함되는지 확인
 bool isRInL(const Node* l, const Node* r)
 {
-	double dir = sqrt(pow(r->w.x - l->w.x, 2) + pow(r->w.y - l->w.y, 2));
+	double dir = sqrt(pow(r->getWall().x - l->getWall().x, 2) + 
+		              pow(r->getWall().y - l->getWall().y, 2));
 
-	return l->w.r >= dir + r->w.r ? true : false;
+	return l->getWall().r >= dir + r->getWall().r ? true : false;
 }
 
 void makeTree(vector<Node*>& tree)
@@ -81,8 +110,8 @@ void makeTree(vector<Node*>& tree)
 
 				// 다른원이 존재하지 않으면 부모 자식 관계 확정
 				if (check) {
-					child->parent = parent;
-					parent->children.push_back(child);
+					child->setParent(parent);
+					parent->pushChildren(child);
 				}
 			}
 		}
@@ -93,11 +122,11 @@ int ans = 0;
 
 int getHeight(const Node* root)
 {
-	int n = root->children.size();
+	int n = root->getChildrenSize();
 	vector<int> tmp;
 
 	for (int i = 0; i < n; i++)
-		tmp.push_back(getHeight(root->children[i]));
+		tmp.push_back(getHeight(root->getChild(i)));
 
 	if (n == 0)
 		return 0;
