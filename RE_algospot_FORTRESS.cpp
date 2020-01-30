@@ -8,7 +8,7 @@
 
 using namespace std;
 
-// º® Å¬·¡½º
+// ë²½ í´ë˜ìŠ¤
 class Wall
 {
 public:
@@ -16,7 +16,7 @@ public:
 	Wall(int x, int y, int r) : x(x), y(y), r(r) { }
 };
 
-// ³ëµå Å¬·¡½º
+// ë…¸ë“œ í´ë˜ìŠ¤
 class Node
 {
 private:
@@ -66,7 +66,7 @@ public:
 	}
 };
 
-// ¿ŞÂÊÀÌ ¿À¸¥ÂÊ ¾È¿¡ Æ÷ÇÔµÇ´ÂÁö È®ÀÎ
+// ì˜¤ë¥¸ìª½ì´ ì™¼ìª½ ì•ˆì— í¬í•¨ë˜ëŠ”ì§€ í™•ì¸
 bool isRInL(const Node* l, const Node* r)
 {
 	double dir = sqrt(pow(r->getWall().x - l->getWall().x, 2) + 
@@ -79,11 +79,11 @@ void makeTree(vector<Node*>& tree)
 {
 	int N = tree.size();
 
-	// ºÎ¸ğ ³ëµå ¼±ÅÃ
+	// ë¶€ëª¨ ë…¸ë“œ ì„ íƒ
 	for (int i = 0; i < N; i++) {
 		Node* parent = tree[i];
 
-		// ÀÚ½Ä ³ëµå ¼±ÅÃ
+		// ìì‹ ë…¸ë“œ ì„ íƒ
 		for (int j = 1; j < N; j++) {
 
 			if (i == j)
@@ -91,24 +91,24 @@ void makeTree(vector<Node*>& tree)
 
 			Node* child = tree[j];
 
-			// ÀÚ½ÄÀÌ ºÎ¸ğ¿¡ Æ÷ÇÔµÇ¸é
+			// ìì‹ì´ ë¶€ëª¨ì— í¬í•¨ë˜ë©´
 			if (isRInL(parent, child))
 			{
 				bool check = true;
 
-				// ÀÚ½Ä°ú ºÎ¸ğ»çÀÌ¿¡ ´Ù¸¥ ¿øÀÌ ÀÖ´ÂÁö È®ÀÎ
+				// ìì‹ê³¼ ë¶€ëª¨ì‚¬ì´ì— ë‹¤ë¥¸ ì›ì´ ìˆëŠ”ì§€ í™•ì¸
 				for (int k = 1; k < N; k++) {
 					if (j == k || i == k)
 						continue;
 
-					// ´Ù¸¥¿øÀÌ Á¸Àç
+					// ë‹¤ë¥¸ì›ì´ ì¡´ì¬
 					if (isRInL(tree[k], child) && isRInL(parent, tree[k])) {
 						check = false;
 						break;
 					}
 				}
 
-				// ´Ù¸¥¿øÀÌ Á¸ÀçÇÏÁö ¾ÊÀ¸¸é ºÎ¸ğ ÀÚ½Ä °ü°è È®Á¤
+				// ë‹¤ë¥¸ì›ì´ ì¡´ì¬í•˜ì§€ ì•Šìœ¼ë©´ ë¶€ëª¨ ìì‹ ê´€ê³„ í™•ì •
 				if (check) {
 					child->setParent(parent);
 					parent->pushChildren(child);
@@ -131,14 +131,14 @@ int getHeight(const Node* root)
 	if (n == 0)
 		return 0;
 
-	// ¿À¸§Â÷¼ø
+	// ì˜¤ë¦„ì°¨ìˆœ
 	sort(tmp.begin(), tmp.end());
 
-	// ÀÙ¿¡¼­ ´Ù¸¥ ÀÙÀ¸·Î °¡´Â ÃÖ´ë ¼ºº® °æ·Î
+	// ìì—ì„œ ë‹¤ë¥¸ ììœ¼ë¡œ ê°€ëŠ” ìµœëŒ€ ì„±ë²½ ê²½ë¡œ
 	if (n >= 2)
 		ans = max(ans, tmp[n - 2] + tmp[n - 1] + 2);
 	
-	// ³ôÀÌ ¹İÈ¯
+	// ë†’ì´ ë°˜í™˜
 	return tmp.back() + 1;
 }
 
@@ -146,16 +146,16 @@ int solve(Node* root)
 {
 	ans = 0;
 
-	// ÀÙ¿¡¼­ ·çÆ®·Î °¡´Â ÃÖ´ë ¼ºº® °æ·Î
+	// ìì—ì„œ ë£¨íŠ¸ë¡œ ê°€ëŠ” ìµœëŒ€ ì„±ë²½ ê²½ë¡œ
 	int ret = getHeight(root);
 
-	// ÀÙ - ÀÙ, ÀÙ - ·çÆ® Áß Å« °ª
+	// ì - ì, ì - ë£¨íŠ¸ ì¤‘ í° ê°’
 	return max(ans, ret);
 }
 
 int main()
 {
-	// Å×½ºÆ® ÄÉÀÌ½º, ¿øÀÇ °³¼ö, x y À§Ä¡, ¹İÁö¸§
+	// í…ŒìŠ¤íŠ¸ ì¼€ì´ìŠ¤, ì›ì˜ ê°œìˆ˜, x y ìœ„ì¹˜, ë°˜ì§€ë¦„
 	int C, N, x, y, r;
 	cin >> C;
 
@@ -164,17 +164,17 @@ int main()
 		cin >> N;
 		vector<Node*> tree;
 
-		// ¿ø ÀÔ·Â
+		// ì› ì…ë ¥
 		for (int i = 0; i < N; i++)
 		{
 			cin >> x >> y >> r;
 			tree.push_back(new Node(x, y, r));
 		}
 
-		// Æ®¸® »ı¼º
+		// íŠ¸ë¦¬ ìƒì„±
 		makeTree(tree);
 
-		// ´ä¾È Ãâ·Â
+		// ë‹µì•ˆ ì¶œë ¥
 		cout << solve(tree[0]) << endl;
 	}
 
