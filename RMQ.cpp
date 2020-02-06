@@ -39,10 +39,10 @@ struct RMQ
 		if (right < nodeLeft || nodeRight < left)
 			return MAXINT;
 
-		if (nodeLeft <= left && right <= nodeRight)
+		if (left <= nodeLeft && nodeRight <= right)
 			return rangeMin[node];
 
-		int mid = (left + right) / 2;
+		int mid = (nodeLeft + nodeRight) / 2;
 
 		return min(query(left, right, node * 2, nodeLeft, mid), query(left, right, node * 2 + 1, mid + 1, nodeRight));
 	}
