@@ -1,11 +1,18 @@
+// 2020-02-08
+// 오일러 회로
+// 알고리즘 문제해결 전략 P836
+
 #include <iostream>
 #include <vector>
 
 using namespace std;
 
+// 인접행렬
 vector<vector<int>>adj;
+// 정점의 차수
 vector<int> deg;
 
+// 오일러 회로
 void getEulerCircuit(int here, vector<int>& circuit)
 {
 	for (int i = 0; i < adj[here].size(); i++)
@@ -40,6 +47,7 @@ int main()
 		deg[a]++; deg[b]++;
 	}
 
+	// 차수의 짝수 판별
 	for (int i = 0; i < N; i++) {
 		if (deg[i] % 2 != 0) {
 			cout << "No Euler Circuit\n";
