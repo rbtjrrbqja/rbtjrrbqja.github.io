@@ -14,23 +14,28 @@ class Graph
 {
 private:
 	int vertaxSize;
+	int edgeSize;
 	int** edge;
 
 public:
-	Graph(int _size) : vertaxSize(_size)
+	Graph()
 	{
-		edge = new int* [_size];
+		int inputVertaxSize;
+		cout << "노드의 개수를 입력해 주세요 :"; cin >> inputVertaxSize;
+		vertaxSize = inputVertaxSize;
 
-		for (int i = 0; i < _size; i++)
-			edge[i] = new int[_size];
+		edge = new int* [vertaxSize];
 
-		for (int i = 0; i < _size; i++)
-			for (int j = 0; j < _size; j++)
+		for (int i = 0; i < vertaxSize; i++)
+			edge[i] = new int[vertaxSize];
+
+		for (int i = 0; i < vertaxSize; i++)
+			for (int j = 0; j < vertaxSize; j++)
 				edge[i][j] = 0;
 
-		int edgeSize;
-
-		cout << "간선의 개수를 입력해 주세요 :"; cin >> edgeSize;
+		int inputEdgeSize;
+		cout << "간선의 개수를 입력해 주세요 :"; cin >> inputEdgeSize;
+		edgeSize = inputEdgeSize;
 
 		for (int i = 0; i < edgeSize; i++)
 		{
@@ -39,16 +44,6 @@ public:
 			cin >> s >> e >> w;
 
 			edge[s][e] = edge[e][s] = w;
-		}
-	}
-
-	void Print()
-	{
-		for (int i = 0; i < vertaxSize; i++)
-		{
-			for (int j = 0; j < vertaxSize; j++)
-				cout << edge[i][j] << " ";
-			cout << endl;
 		}
 	}
 
@@ -97,14 +92,11 @@ public:
 		for (int i = 0; i < vertaxSize; i++)
 			cout << dist[i] << " ";
 	}
-
 };
 
 int main()
 {
-	Graph g(9);
-
-	//g.Print();
+	Graph g;
 	g.Dijkstra(0);
 
 	return 0;
@@ -112,6 +104,7 @@ int main()
 
 // sample input
 /*
+9
 15
 0 1 2
 0 5 9
