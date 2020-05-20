@@ -1,6 +1,5 @@
 #include <iostream>
 #include <algorithm>
-#include <memory.h>
 #include <queue>
 #include <vector>
 
@@ -21,7 +20,7 @@ public:
 	Graph()
 	{
 		int inputVertaxSize;
-		cout << "³ëµåÀÇ °³¼ö¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä :"; cin >> inputVertaxSize;
+		cout << "ë…¸ë“œì˜ ê°œìˆ˜ë¥¼ ìž…ë ¥í•´ ì£¼ì„¸ìš” :"; cin >> inputVertaxSize;
 		vertaxSize = inputVertaxSize;
 
 		edge = new int* [vertaxSize];
@@ -34,13 +33,13 @@ public:
 				edge[i][j] = 0;
 
 		int inputEdgeSize;
-		cout << "°£¼±ÀÇ °³¼ö¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä :"; cin >> inputEdgeSize;
+		cout << "ê°„ì„ ì˜ ê°œìˆ˜ë¥¼ ìž…ë ¥í•´ ì£¼ì„¸ìš” :"; cin >> inputEdgeSize;
 		edgeSize = inputEdgeSize;
 
 		for (int i = 0; i < edgeSize; i++)
 		{
 			int s, e, w;
-			cout << "°£¼±ÀÇ Á¤º¸¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä :";
+			cout << "ê°„ì„ ì˜ ì •ë³´ë¥¼ ìž…ë ¥í•´ ì£¼ì„¸ìš” :";
 			cin >> s >> e >> w;
 
 			edge[s][e] = edge[e][s] = w;
