@@ -1,5 +1,4 @@
 // 2020-02-06
-// 구간의 최소값을 구하는 구간트리
 
 #include <iostream>
 #include <vector>
